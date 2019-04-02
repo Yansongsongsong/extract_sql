@@ -2,6 +2,7 @@ package yansong.extractor;
 
 import org.apache.commons.cli.*;
 
+import java.io.File;
 import java.util.Arrays;
 
 /**
@@ -20,5 +21,10 @@ public class Utils {
         }
 
         return true;
+    }
+
+    public static boolean checkFile(String furl){
+        File file = new File(furl);
+        return file.exists();
     }
 }

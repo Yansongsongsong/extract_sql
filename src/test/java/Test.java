@@ -9,6 +9,6 @@ public class Test {
         Prompt.cli(new String[]{"-help"});
         Prompt.cli(new String[]{"-col", "123123", "123123"});
         Prompt.cli(new String[]{"-COL", "123123", "123123"});
-        Prompt.cli(new String[]{"-a", "123123", "123123"});
+        Prompt.cli(new String[]{"-csv", "file", "-col", "12", "1234"});
     }
 }
