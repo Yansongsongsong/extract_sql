@@ -11,9 +11,13 @@ git clone https://github.com/Yansongsongsong/extract_sql.git
 cd extract_sql 
 mvn package -DskipTests
 java -jar ./target/extractSQL.jar 
+# or add the jar to your PATH
+alias extractSQL="java -jar ${PWD}/target/extractSQL.jar"
+extractSQL
 ```
 the display is here
 ```shell
+$ extractSQL
 usage: extractSQL
  -col <column>   optional. only these columns will be considered when
                  processing. count from 0. e.g. -col 1 2
@@ -30,7 +34,7 @@ usage: extractSQL
 the usage
 ```shell
 # default outfile name is out.csv
-java -jar ./target/extractSQL.jar -csv source.csv
+extractSQL -csv source.csv
 # define the outfile name
-java -jar ./target/extractSQL.jar -csv source.csv -out target.csv
+extractSQL -csv source.csv -out target.csv
 ```
