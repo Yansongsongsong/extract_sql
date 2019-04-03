@@ -12,7 +12,7 @@ public class Main {
             @Override
             public void next(String csv, String out, String[] col, String[] uCol) {
                 try {
-                    Utils.facade(csv, out);
+                    Utils.facade(csv, out, col, uCol);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

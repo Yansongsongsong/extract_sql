@@ -1,0 +1,1 @@
+select a from b1,select a from b2,select a from b3,select a from b4

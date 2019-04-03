@@ -18,6 +18,105 @@ import java.util.*;
  * @Date 2019/4/2 22:05
  */
 public class Utils {
+    private static int[] str2Int(String[] cols){
+        int[] ints = new int[cols.length];
+        for (int i = 0; i < cols.length; i++) {
+            ints[i] = Integer.parseInt(cols[i]);
+        }
+        return ints;
+    }
+
+    private static boolean isInThisArray(int[] ints, int tar){
+        for (int i : ints) {
+            if (tar == i){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private static List<String[]> processWithUCol(int[] intsUCols, String inputFile){
+        List<String[]> list = new ArrayList<String[]>();
+
+        try {
+            List<CSVRecord> read = CSVHelper.read(inputFile, false);
+            for (CSVRecord csvRecord : read) {
+                // Accessing values by the names assigned to each column
+                int colNum = 0;
+                Iterator<String> it = csvRecord.iterator();
+                while (it.hasNext()){
+                    String str = it.next();
+                    if(!isInThisArray(intsUCols, colNum++)){
+                        String[] row = Utils.extractSQL(str);
+                        if(row.length != 0){
+                            list.add(row);
+                        }
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
+    private static List<String[]> processWithCol(int[] intsCols, String inputFile){
+        List<String[]> list = new ArrayList<String[]>();
+
+        try {
+            List<CSVRecord> read = CSVHelper.read(inputFile, false);
+            for (CSVRecord csvRecord : read) {
+                // Accessing values by the names assigned to each column
+                int colNum = 0;
+                Iterator<String> it = csvRecord.iterator();
+                while (it.hasNext()){
+                    String str = it.next();
+                    if(isInThisArray(intsCols, colNum++)){
+                        String[] row = Utils.extractSQL(str);
+                        if(row.length != 0){
+                            list.add(row);
+                        }
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
+    public static void facade(String inputFile, String outputFile, String[] cols, String[] uCols) throws IOException {
+        if(cols == null && uCols == null){
+            facade(inputFile, outputFile);
+            return;
+        }
+
+        if (cols != null && !checkNumber(cols)){
+            System.err.println("-col parameter contains non-numbers");
+        }
+
+        if (uCols != null && !checkNumber(uCols)){
+            System.err.println("-COL parameter contains non-numbers");
+        }
+
+        int[] intsCols = null, intsUCols = null;
+
+        List<String[]> list = null;
+        if(cols != null){
+            intsCols = str2Int(cols);
+            list = processWithCol(intsCols, inputFile);
+        } else {
+            intsUCols = str2Int(uCols);
+            list = processWithUCol(intsUCols, inputFile);
+        }
+
+//        CSVHelper.write(outputFile, new String[] {"sources", "sqls"}, list);
+        CSVHelper.write(outputFile, new String[]{}, list);
+    }
+
     public static void facade(String inputFile, String outputFile) throws IOException {
         List<String[]> list = new ArrayList<String[]>();
 
