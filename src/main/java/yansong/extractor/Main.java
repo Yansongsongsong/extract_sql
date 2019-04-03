@@ -7,7 +7,7 @@ import java.io.IOException;
  * @Date 2019/2/27 23:48
  */
 public class Main {
-    public static void main(String [] args) throws Exception {
+    public static void main(String [] args) {
         Prompt prompt = new Prompt().next(new Prompt.Callback() {
             @Override
             public void next(String csv, String out, String[] col, String[] uCol) {

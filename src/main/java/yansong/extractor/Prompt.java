@@ -60,7 +60,7 @@ public class Prompt {
         CommandLineParser parser = new DefaultParser();
         try {
             CommandLine line = parser.parse( options, args );
-            if( line.hasOption("help") || line.getArgs().length == 0){
+            if( line.hasOption("help") || line.getOptions().length == 0){
                 HelpFormatter formatter = new HelpFormatter();
                 formatter.printHelp( "extractSQL", options );
                 return;

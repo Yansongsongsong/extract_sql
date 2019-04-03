@@ -71,7 +71,7 @@ public class Utils {
         ParseTree tree = parser.sql_script();
         TokenStream ts = parser.getTokenStream();
 
-        List<String> list = new LinkedList<>();
+        List<String> list = new LinkedList<String>();
 
         for (PlSqlParser.Unit_statementContext rctx: ctx.unit_statement()) {
             try{
