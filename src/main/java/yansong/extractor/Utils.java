@@ -18,11 +18,11 @@ import java.util.*;
  * @Date 2019/4/2 22:05
  */
 public class Utils {
-    public static void facade() throws IOException {
+    public static void facade(String inputFile, String outputFile) throws IOException {
         List<String[]> list = new ArrayList<String[]>();
 
         try {
-            List<CSVRecord> read = CSVHelper.read("/Users/yansong/analysis/out/table_names.csv", false);
+            List<CSVRecord> read = CSVHelper.read(inputFile, false);
             for (CSVRecord csvRecord : read) {
                 // Accessing values by the names assigned to each column
                 Iterator<String> it = csvRecord.iterator();
@@ -37,14 +37,12 @@ public class Utils {
             e.printStackTrace();
         }
 
-        CSVHelper.write("/Users/yansong/analysis/extract_sql/ExtractSQLProject/test1.csv",
-                new String[] {"sources", "sqls"},
-                list);
+//        CSVHelper.write(outputFile, new String[] {"sources", "sqls"}, list);
+        CSVHelper.write(outputFile, new String[]{}, list);
     }
 
     public static boolean checkNumber(String[] columns){
-        for (String n :
-                columns) {
+        for (String n : columns) {
             try{
                 Integer.parseInt(n);
             } catch (NumberFormatException e){

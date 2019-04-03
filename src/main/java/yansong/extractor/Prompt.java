@@ -9,8 +9,19 @@ import java.util.Arrays;
  * @Date 2019/4/2 22:05
  */
 public class Prompt {
+    interface Callback {
+        void next(String csv, String out, String[] col, String[] uCol);
+    }
+
+    private Callback callback;
+
+    public Prompt next(Callback c){
+        this.callback = c;
+        return this;
+    }
+
     @SuppressWarnings({ "deprecation", "static-access" })
-    public static void cli(String[] args){
+    public void cli(String[] args){
         Option help = new Option( "help", "print this message" );
 
         Option inputFile = OptionBuilder.withArgName( "file" )
@@ -49,7 +60,7 @@ public class Prompt {
         CommandLineParser parser = new DefaultParser();
         try {
             CommandLine line = parser.parse( options, args );
-            if( line.hasOption("help")){
+            if( line.hasOption("help") || line.getArgs().length == 0){
                 HelpFormatter formatter = new HelpFormatter();
                 formatter.printHelp( "extractSQL", options );
                 return;
@@ -60,13 +71,24 @@ public class Prompt {
                 return;
             }
 
+            String csvFile = line.getOptionValue("csv");
+            String outFile = line.getOptionValue("out");
+            outFile = outFile == null? "./out.csv": outFile;
+
+            if(callback == null){
+                return;
+            }
+
             if( line.hasOption( "col" ) ) {
-                System.out.println(line.getOptionValue( "col" ));
+                // col exists, just process with cols
+                callback.next(csvFile, outFile, line.getOptionValues("col"), null);
             } else {
                 if( line.hasOption( "COL" ) ) {
-                    System.out.println(Arrays.asList(line.getOptionValues( "COL" )));
+                    // col doesn't exist, process with COL
+                    callback.next(csvFile, outFile, null, line.getOptionValues("COL"));
                 } else {
-                    System.out.println("ALL");
+                    // have no definition for cols, process with all col
+                    callback.next(csvFile, outFile, null, null);
                 }
             }
         }catch( ParseException exp ) {
