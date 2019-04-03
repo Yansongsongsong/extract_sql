@@ -1,6 +1,5 @@
 import org.junit.Test;
 import yansong.extractor.Main;
-import yansong.extractor.Prompt;
 import yansong.extractor.Utils;
 
 import java.io.File;
