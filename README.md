@@ -12,7 +12,6 @@ cd extract_sql
 mvn package -DskipTests
 java -jar ./target/extractSQL.jar 
 ```
-
 the display is here
 ```shell
 usage: extractSQL
@@ -26,4 +25,12 @@ usage: extractSQL
  -help           print this message
  -out <file>     optional. the path for file to store sql
 
+```
+
+the usage
+```shell
+# default outfile name is out.csv
+java -jar ./target/extractSQL.jar -csv source.csv
+# define the outfile name
+java -jar ./target/extractSQL.jar -csv source.csv -out target.csv
 ```
