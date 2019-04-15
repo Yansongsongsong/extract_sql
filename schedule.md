@@ -25,7 +25,7 @@ usage: extractSQL
 
 SQL Parser 是很重要的一步，因为之后的模型和算法会用到Parser出来的结果。在这里我处理sql的Parser使用的是ANTLR4。对于ANTLR4来说，分析一门语言，最重要的是写出这门语言类似BNF定义的语法文件，ANTLR4中称为`grammar.g4`文件。
 
-对于我们项目中的SQL Parser，我修改了`g4`文件，让其可以识别出一些比较独特的sql符号（大量出现在了国泰的数据库中），并将其拆分称两个文件，分别是`lexer.g4` 和`parser.g4`分别定义了词法和语法。
+对于我们项目中的SQL Parser，我修改了`g4`文件，让其可以识别出一些比较独特的sql符号（大量出现在了**的数据库中），并将其拆分称两个文件，分别是`lexer.g4` 和`parser.g4`分别定义了词法和语法。
 
 详细的内容可以见[PlSqlLexer.g4](<https://github.com/Yansongsongsong/extract_sql/blob/master/src/main/java/yansong/extractor/PlSqlLexer.g4>)和[PlSqlParser.g4](<https://github.com/Yansongsongsong/extract_sql/blob/master/src/main/java/yansong/extractor/PlSqlParser.g4>)。注意在使用的时候有一处hardcode，需要移除
 
